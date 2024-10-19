@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CustomInput from "../CustomInput";
+import CustomInput from "./CustomInput.js";
 import "./Cadastro.css";
 
 function Cadastro() {
@@ -19,12 +19,12 @@ function Cadastro() {
   };
 
   const salvar = () => {
-    console.log(dados)
-    const pessoas = JSON.parse(localStorage.getItem("pessoas"))
-    pessoas.push(dados)
-    localStorage.setItem("pessoas", JSON.stringify(pessoas))
-    alert("Cadastro realizado com sucesso")
-    limpar()
+    console.log(dados);
+    const pessoas = JSON.parse(localStorage.getItem("pessoas")) || []
+    pessoas.push(dados);
+    localStorage.setItem("pessoas", JSON.stringify(pessoas));
+    alert("Cadastro realizado com sucesso");
+    limpar();
   };
 
   const limpar = () => {
@@ -38,8 +38,6 @@ function Cadastro() {
       numeroVaga: "",
     });
   };
-
- 
 
   return (
     <div className="formulario">
@@ -101,10 +99,9 @@ function Cadastro() {
         nome="numeroVaga"
       />
       <div className="button-container">
-      <button onClick={salvar}>Salvar</button>
-      <button onClick={limpar}>Limpar</button>
+        <button onClick={salvar}>Salvar</button>
+        <button onClick={limpar}>Limpar</button>
       </div>
-      
     </div>
   );
 }

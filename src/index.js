@@ -2,7 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import Tela from './pages/Tela/Tela.js'
-import Cadastro from './components/Cadastro/Cadastro.js'
+import Cadastro from './pages/Cadastro/Cadastro.js'
+
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
