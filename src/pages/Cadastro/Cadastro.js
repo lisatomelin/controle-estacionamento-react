@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CustomInput from "./CustomInput.js";
+import CustomInput from '../CustomInput.js'
 import "./Cadastro.css";
 
 function Cadastro() {

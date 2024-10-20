@@ -2,15 +2,16 @@ import React from 'react'
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import Tela from './pages/Tela/Tela.js'
-import Cadastro from './pages/Cadastro/Cadastro.js'
+
 
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <Tela/><Cadastro/>
-  </React.StrictMode>
+  <BrowserRouter>
+    <Tela />
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
