@@ -20,7 +20,7 @@ function Listagem() {
   }, []);
 
   return (
-    <div>
+    <div className="listagem">
       <h1>Listagem Estacionamento</h1>
       {pessoas.map((p) => (
         <Card pessoa={p} />

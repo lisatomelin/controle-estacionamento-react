@@ -88,6 +88,7 @@ function Cadastro() {
 
   return (
     <div className="formulario">
+      <h1 className="formsTitulo">Cadastro de Estacionamento</h1>
       <CustomInput
         label="Nome Completo:"
         tipo="text"
