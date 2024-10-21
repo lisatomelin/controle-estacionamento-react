@@ -1,7 +1,11 @@
 import React from "react";
 import "./Card.css";
+import { useNavigate } from "react-router-dom";
 
 function Card(props) {
+  const navigate = useNavigate()
+
+
   const excluir = () => {
     const pessoas = JSON.parse(localStorage.getItem("pessoas"));
     const pessoasComExclusao = pessoas.filter(
@@ -9,7 +13,13 @@ function Card(props) {
     );
     localStorage.setItem("pessoas", JSON.stringify(pessoasComExclusao));
     window.dispatchEvent(new Event("alteracaopessoas"));
-  };
+  }
+
+  const alterar = () => {
+    navigate(`/cadastro/${props.pessoa.placaVeiculo}`)
+
+  }
+
   return (
     <div className="background">
       <h3 className="content">
@@ -27,8 +37,8 @@ function Card(props) {
       <p className="content">Número da Vaga: {props.pessoa.numeroVaga}</p>
 
      
-      <div class="botton-container">
-        <button>Editar</button>
+      <div className="botton-container">
+        <button onClick={alterar}>Editar</button>
         <button onClick={excluir}>Excluir</button>
       </div>
     </div>

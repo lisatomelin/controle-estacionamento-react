@@ -1,8 +1,14 @@
-import React, { useState } from "react";
-import CustomInput from '../CustomInput.js'
+import React, { useEffect, useState } from "react";
+import CustomInput from "../CustomInput.js";
 import "./Cadastro.css";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Cadastro() {
+  const navigate = useNavigate();
+  const { placaVeiculo } = useParams();
+
+  const [isEdicao, setIsEdicao] = useState(false);
+
   const [dados, setDados] = useState({
     nomeProprietario: "",
     placaVeiculo: "",
@@ -13,17 +19,58 @@ function Cadastro() {
     numeroVaga: "",
   });
 
+  
+  useEffect(() => {
+    if (placaVeiculo) {
+      const pessoas = JSON.parse(localStorage.getItem("pessoas")) || [];
+      const pessoaEncontrada = pessoas.find(
+        (pessoa) => pessoa.placaVeiculo === placaVeiculo
+      );
+      if (pessoaEncontrada) {
+        setDados(pessoaEncontrada);
+        setIsEdicao(true);
+      } else {
+        navigate("/cadastro");
+      }
+    }
+  }, [placaVeiculo, navigate]); 
+
   const handleInput = (event) => {
     const { name, value } = event.target;
     setDados({ ...dados, [name]: value });
   };
 
   const salvar = () => {
-    console.log(dados);
-    const pessoas = JSON.parse(localStorage.getItem("pessoas")) || []
+    if (isEdicao) {
+      alterarPessoa();
+    } else {
+      novaPessoa();
+    }
+  };
+
+  const alterarPessoa = () => {
+    let pessoas = JSON.parse(localStorage.getItem("pessoas"));
+    let pessoaEncontrada = pessoas.find((pessoa) => pessoa.placaVeiculo === placaVeiculo);
+    pessoas = pessoas.filter((pessoa) => pessoa.placaVeiculo !== placaVeiculo);
+    pessoaEncontrada = {
+      ...pessoaEncontrada,
+      nomeProprietario: dados.nomeProprietario,
+      numeroApartamento: dados.numeroApartamento,
+      blocoApartamento: dados.blocoApartamento,
+      modeloVeiculo: dados.modeloVeiculo,
+      corVeiculo: dados.corVeiculo,
+      numeroVaga: dados.numeroVaga,
+    };
+    pessoas.push(pessoaEncontrada);
+    localStorage.setItem("pessoas", JSON.stringify(pessoas));
+    navigate("/listagem");
+  };
+
+  const novaPessoa = () => {
+    const pessoas = JSON.parse(localStorage.getItem("pessoas")) || [];
     pessoas.push(dados);
     localStorage.setItem("pessoas", JSON.stringify(pessoas));
-    alert("Cadastro realizado com sucesso");
+    alert("Pessoa salva com sucesso!");
     limpar();
   };
 
@@ -57,7 +104,9 @@ function Cadastro() {
         valor={dados.placaVeiculo}
         handleInput={handleInput}
         nome="placaVeiculo"
+        disabled={isEdicao}
       />
+
       <CustomInput
         label="Número do Apartamento:"
         tipo="text"
@@ -66,6 +115,7 @@ function Cadastro() {
         handleInput={handleInput}
         nome="numeroApartamento"
       />
+
       <CustomInput
         label="Bloco do Apartamento:"
         tipo="text"
@@ -74,6 +124,7 @@ function Cadastro() {
         handleInput={handleInput}
         nome="blocoApartamento"
       />
+
       <CustomInput
         label="Modelo do Veículo:"
         tipo="text"
@@ -82,6 +133,7 @@ function Cadastro() {
         handleInput={handleInput}
         nome="modeloVeiculo"
       />
+
       <CustomInput
         label="Cor do Veículo:"
         tipo="text"
@@ -90,6 +142,7 @@ function Cadastro() {
         handleInput={handleInput}
         nome="corVeiculo"
       />
+
       <CustomInput
         label="Número da Vaga:"
         tipo="text"
@@ -98,6 +151,7 @@ function Cadastro() {
         handleInput={handleInput}
         nome="numeroVaga"
       />
+
       <div className="button-container">
         <button onClick={salvar}>Salvar</button>
         <button onClick={limpar}>Limpar</button>

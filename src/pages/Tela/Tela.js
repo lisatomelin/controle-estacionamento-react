@@ -11,6 +11,7 @@ function Tela() {
             <h1>Controle de Estacionamento</h1>
             <Routes>
                 <Route path='/cadastro' element={<Cadastro/>}/>
+                <Route path='/cadastro/:placaVeiculo' element={<Cadastro />} />
                 <Route path="/listagem" element={<Listagem/>}/>
             </Routes>
             
